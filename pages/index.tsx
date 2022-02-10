@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export interface Emoji {
@@ -59,7 +60,11 @@ export default function Home() {
           />
         </div>
       )}
-      <div className="pb-2 text-2xl"> results </div>
+      <div className="pb-2 text-2xl">
+        <Link href={"/results"}>
+          <a>results</a>
+        </Link>
+      </div>
     </div>
   );
 }
