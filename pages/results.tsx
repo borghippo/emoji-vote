@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { prisma } from "../utils/prisma";
 
 export interface Emoji {
   id: number;
@@ -8,6 +9,18 @@ export interface Emoji {
     VoteFor: 19;
   };
 }
+
+type EmojiQueryResult = Promise<
+  | {
+      _count: {
+        VoteFor: number;
+        VoteAgainst: number;
+      };
+      id: number;
+      name: string;
+    }[]
+  | undefined
+>;
 
 const getEmojisInOrder = async () => {
   return await prisma?.emoji.findMany({
@@ -27,19 +40,7 @@ const getEmojisInOrder = async () => {
   });
 };
 
-export default function Results(
-  props: Promise<
-    | {
-        _count: {
-          VoteFor: number;
-          VoteAgainst: number;
-        };
-        id: number;
-        name: string;
-      }[]
-    | undefined
-  >
-) {
+export default function Results(props: EmojiQueryResult) {
   return (
     <div className="h-screen w-screen flex flex-col justify-between items-center">
       <div className="pt-4">
