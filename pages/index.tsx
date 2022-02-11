@@ -1,8 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { prisma } from "../utils/prisma";
-import { getOptionsForVote } from "../utils/randomEmoji";
 
 export interface Emoji {
   id: number;
