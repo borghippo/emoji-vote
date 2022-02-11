@@ -9,8 +9,8 @@ export interface Emoji {
   name: string;
 }
 
-export default function Home(props: Emoji[]) {
-  const [data, setData] = useState<Emoji[]>(props);
+export default function Home() {
+  const [data, setData] = useState<Emoji[]>([]);
   const [recentVote, setRecentVote] = useState(null);
 
   const postVote = async (id: number) => {
@@ -87,16 +87,3 @@ const EmojiTemplate = (props: EmojiTemplateProps) => {
     </div>
   );
 };
-
-export async function getServerSideProps() {
-  const [firstEmoji, secondEmoji] = getOptionsForVote();
-  const emojis = await prisma.emoji.findMany({
-    where: {
-      id: {
-        in: [firstEmoji, secondEmoji],
-      },
-    },
-  });
-
-  return { props: { emojis } };
-}
