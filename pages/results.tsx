@@ -6,8 +6,8 @@ export interface Emoji {
   id: number;
   name: string;
   _count: {
-    VoteAgainst: 6;
-    VoteFor: 19;
+    VoteAgainst: number;
+    VoteFor: number;
   };
 }
 
