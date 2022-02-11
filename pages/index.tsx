@@ -44,13 +44,13 @@ export default function Home() {
         <p className="text-4xl text-center">which do you like better?</p>
       </div>
       {data && (
-        <div className="p-8 flex flex-col space-x-8 space-y-3 items-baseline md:flex-row">
+        <div className="p-8 flex flex-col md:space-x-8 space-y-3 md:items-baseline md:flex-row">
           <EmojiTemplate
             id={data[0]?.id}
             name={data[0]?.name}
             vote={() => postVote(data[0]?.id)}
           />
-          <div className="text-3xl">
+          <div className="text-3xl text-center">
             <p>or</p>
           </div>
           <EmojiTemplate
