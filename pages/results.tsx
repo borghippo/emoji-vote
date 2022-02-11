@@ -68,7 +68,7 @@ export default function Results(props: EmojiQueryResult) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const orderedEmojis = await getEmojisInOrder();
   return {
     props: { emojis: orderedEmojis },
