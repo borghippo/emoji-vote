@@ -1,15 +1,16 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { prisma } from "../utils/prisma";
+import { getOptionsForVote } from "../utils/randomEmoji";
 
 export interface Emoji {
   id: number;
   name: string;
 }
 
-export default function Home() {
-  const [data, setData] = useState<Emoji[]>([]);
-  const [isLoading, setLoading] = useState(false);
+export default function Home(props: Emoji[]) {
+  const [data, setData] = useState<Emoji[]>(props);
   const [recentVote, setRecentVote] = useState(null);
 
   const postVote = async (id: number) => {
@@ -24,12 +25,10 @@ export default function Home() {
   };
 
   useEffect(() => {
-    setLoading(true);
     fetch("/api/emojis")
       .then((res) => res.json())
       .then((data) => {
         setData(data);
-        setLoading(false);
       });
   }, [recentVote]);
 
@@ -88,3 +87,16 @@ const EmojiTemplate = (props: EmojiTemplateProps) => {
     </div>
   );
 };
+
+export async function getServerSideProps() {
+  const [firstEmoji, secondEmoji] = getOptionsForVote();
+  const emojis = await prisma.emoji.findMany({
+    where: {
+      id: {
+        in: [firstEmoji, secondEmoji],
+      },
+    },
+  });
+
+  return { props: { emojis } };
+}
