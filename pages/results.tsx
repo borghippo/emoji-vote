@@ -1,3 +1,4 @@
+import { Head } from "next/document";
 import Link from "next/link";
 import { prisma } from "../utils/prisma";
 
@@ -43,6 +44,11 @@ const getEmojisInOrder = async () => {
 export default function Results(props: EmojiQueryResult) {
   return (
     <div className="h-screen w-screen flex flex-col justify-between items-center">
+      <Head>
+        <title>vote</title>
+        <meta name="description" content="vote on your favorite emoji" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <div className="pt-4">
         <p className="text-4xl text-center">results</p>
       </div>
@@ -52,8 +58,8 @@ export default function Results(props: EmojiQueryResult) {
             return (
               <li key={index} className="list-none text-2xl">
                 {pic.name}
-                {" - votes for: "}
-                {pic._count.VoteFor}
+                {" - "}
+                {pic._count.VoteFor} {"votes"}
               </li>
             );
           });
