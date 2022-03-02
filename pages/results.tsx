@@ -11,18 +11,6 @@ export interface Emoji {
   };
 }
 
-type EmojiQueryResult = Promise<
-  | {
-      _count: {
-        VoteFor: number;
-        VoteAgainst: number;
-      };
-      id: number;
-      name: string;
-    }[]
-  | undefined
->;
-
 const getEmojisInOrder = async () => {
   return await prisma?.emoji.findMany({
     orderBy: {
@@ -41,7 +29,7 @@ const getEmojisInOrder = async () => {
   });
 };
 
-export default function Results(props: EmojiQueryResult) {
+export default function Results(props: Promise<Emoji>) {
   return (
     <div className="h-screen w-screen flex flex-col justify-between items-center">
       <div className="pt-4">
